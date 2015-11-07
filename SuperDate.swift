@@ -64,9 +64,13 @@ public extension NSDate {
   }
 
   // Initialize from an ISO8601 string
-  convenience init(fromISO8601 iso: String) {
+  convenience init?(fromISO8601 iso: String) {
     let formatter = NSDate.iso8601formatter
-    self.init(timeInterval:0, sinceDate:formatter.dateFromString(iso)!)
+    if let initDate = formatter.dateFromString(iso) {
+      self.init(timeInterval:0, sinceDate:initDate)
+    } else {
+      return nil
+    }
   }
 }
 
